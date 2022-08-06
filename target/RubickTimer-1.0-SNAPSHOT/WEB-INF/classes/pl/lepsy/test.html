@@ -1,0 +1,27 @@
+<html>
+<head>
+    <title>Title</title>
+    <link href="../style/default.css" rel="stylesheet" type="text/css">
+    <script>timer.js</script>
+</head>
+<body>
+<h1>Strona główna</h1>
+<h2>${scramble.scrambleValue}</h2>
+<div id="stopwatch">
+    00:00:00
+</div>
+<ul id="buttons">
+    <li><button onclick="startTimer()">Start</button></li>
+    <li><button onclick="stopTimer()">Stop</button></li>
+    <li><button onclick="resetTimer()">Reset</button></li>
+</ul>
+
+
+
+<form action="/solve/main" method="get">
+    <button type="submit" name="button" value="newScramble">new scramble</button>
+    <button type="submit" name="button" value="startTimer">start</button>
+    <button type="submit" name="button" value="stopTImer">stop</button>
+</form>
+</body>
+</html>

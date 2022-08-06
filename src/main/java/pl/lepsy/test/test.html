@@ -1,0 +1,110 @@
+<html>
+<head>
+    <title>Title</title>
+    <style>
+        body {
+            background: #202020;
+            color: white;
+        }
+        button {
+            width: 100px;
+            height: 30px;
+            border: 3px solid white;
+            border-radius: 50px;
+            background: #202020;
+            color: white;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #mainstopwatch{
+            font-size: 100px;
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+        }
+        #mainTime{
+            position: absolute;
+            top: 40%;
+            left: 50%;
+        }
+        #scramble{
+            position: absolute;
+            top: 30%;
+            left: 50%;
+        }
+    </style>
+
+</head>
+<body>
+<center>
+    <div id="mainstopwatch">
+        <div class="mainTime">
+            <span id="mainminute">00</span>
+            <span id="mainsecond">00</span>
+            <span id="milliseconds">00</span>
+        </div>
+
+        <br>
+
+        <button id="start" onclick="start();">Start</button>
+        <button id="stop" onclick="stop();">Stop</button>
+        <button id="reset" onclick="reset();">Reset</button>
+    </div>
+
+</center>
+
+
+
+<script>
+    let [milliseconds,second,minute,] = [0,0,0];
+    let timerRef = document.querySelector('.mainTime');
+    let int = null;
+
+    document.getElementById('start').addEventListener('click', function(event){
+        if(int!==null){
+            clearInterval(int);
+        }
+        int = setInterval(mainTime,10);
+    });
+
+    document.getElementById('stop').addEventListener('click', function(event){
+        clearInterval(int);
+        let timeArr = [minute, second, milliseconds];
+        console.log(timeArr);
+    });
+
+    document.getElementById('reset').addEventListener('click', function(event){
+        clearInterval(int);
+        [milliseconds,seconds,minutes,hours] = [0,0,0];
+        timerRef.innerHTML = '00 : 00 : 00';
+    });
+
+
+    function mainTime(){
+        milliseconds+=10;
+        if(milliseconds == 1000){
+            milliseconds = 0;
+            second++;
+            if(second == 60){
+                second = 0;
+                minute++;
+                if(minute == 60){
+                    minute = 0;
+                }
+            }
+        }
+
+        let m = minute < 10 ? "0" + minute : minute;
+        let s = second < 10 ? "0" + second : second;
+        let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
+
+        timerRef.innerHTML = ` ${m} : ${s} : ${ms}`;
+    }
+
+
+
+</script>
+</body>
+</html>
