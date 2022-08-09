@@ -1,6 +1,7 @@
 package pl.lepsy.solve;
 
 
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,8 @@ import pl.lepsy.time.TimeService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 
 @Controller
 @RequestMapping("/solve")
@@ -36,27 +39,28 @@ public class SolveController {
 
     @GetMapping("/main")
     public String MainSiteSolve(Model model, HttpServletRequest request){
-
+        String resetButton = request.getParameter("reset");
         ScrambleAlg scrambleAlg = new ScrambleAlg();
-        scrambleAlg.setScrambleValue(ScrambleComponent.rubickMixAlg());
-
-        model.addAttribute("scramble", scrambleAlg);
 
         model.addAttribute("timeValue", new Time());
 
-        String button = request.getParameter("button");
-        if ("newScramble".equals(button)) {
+        if ("newScramble".equals(resetButton)) {
             scrambleAlg.setScrambleValue(scrambleComponent.rubickMixAlg());
             model.addAttribute("mixAlg", scrambleAlg);
+            scrambleService.saveScramble(scrambleAlg);
         }
-        scrambleService.saveScramble(scrambleAlg);
 
         return "mainView";
+    }
+
+    @GetMapping("/add")
+    public String addTime(Model model){
+        model.addAttribute("timeValue", new Time());
+        return "addTime";
     }
     @PostMapping("/add")
-    public String addTime(Time time){
+    public String saveTime(Time time){
         timeService.saveTime(time);
-        return "mainView";
+        return "redirect:/solve/main";
     }
-
 }

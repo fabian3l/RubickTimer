@@ -12,6 +12,9 @@
     <title>Title</title>
 </head>
 <body>
+<a href="/main">Strong główna</a>
+
+
 
 </body>
 </html>

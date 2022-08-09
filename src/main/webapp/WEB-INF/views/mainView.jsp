@@ -18,7 +18,7 @@
 <center>
 
     <div id="scramble">
-        <h2>${scramble.scrambleValue}</h2>
+        <h2>${mixAlg.scrambleValue}</h2>
     </div>
 
     <div id="mainstopwatch">
@@ -30,22 +30,26 @@
 
         <br>
             <div id="timeButtons">
-                <button id="start">Start</button>
-                <button id="stop">Stop</button>
                     <form action="/solve/main" method="get">
-                         <button id="reset" type="submit" name="button" value="newScramble">new scramble</button>
+                        <button id="reset" type="submit" name="reset" value="newScramble">new scramble</button>
                     </form>
+                        <button id="start" name="start" value="start">Start</button>
+                        <button id="stop" name="stop" value="stop">Stop </button>
+
             </div>
     </div>
     <div id="addTime">
         <p>Podaj swój czas</p>
         <form:form method="post" action="/solve/add" modelAttribute="timeValue">
-            <form:input path="timeValue"></form:input>
+            <form:hidden id="timeValue" path="timeValue"></form:hidden>
             <button type="submit">Wyślij</button>
         </form:form>
     </div>
 
+    <a href="/solve/add">Dodaj czas</a>
+
 </center>
+
 <script>
     let [milliseconds,second,minute,] = [0,0,0];
     let timerRef = document.querySelector('.mainTime');
@@ -60,8 +64,10 @@
 
     document.getElementById('stop').addEventListener('click', function (event){
         clearInterval(int);
-        let timeArr = [minute, second, milliseconds];
-        let stringDoZapisuWBazie = minute + ":" + second + ":" + milliseconds;
+        let stringDoZapisuWBazie = document.querySelector('div.mainTime').innerHTML;
+        console.log(stringDoZapisuWBazie);
+        document.getElementById('timeValue').value=stringDoZapisuWBazie;
+
 
     });
 
