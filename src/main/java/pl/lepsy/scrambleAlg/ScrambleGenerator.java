@@ -8,7 +8,7 @@ import java.util.Random;
 
 @Component
 //Klasa losująca algorytm mieszający, składający się z 19-tu losowych ruchów kostką
-public class ScrambleComponent {
+public class ScrambleGenerator {
     public static String rubickMixAlg(){
 
 

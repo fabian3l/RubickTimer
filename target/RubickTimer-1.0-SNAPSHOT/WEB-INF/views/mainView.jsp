@@ -1,4 +1,6 @@
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%--@elvariable id="timeValue" type="java"--%>
 <%--
   Created by IntelliJ IDEA.
   User: fabian
@@ -13,18 +15,19 @@
     <link href="${pageContext.request.contextPath}/resources/css/default.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<h1>Strona główna</h1>
+<h1>Main Site</h1>
+<a href="/solve/all">All Solves</a>
 
 <center>
 
     <div id="scramble">
-        <h2>${mixAlg.scrambleValue}</h2>
+        <h2>${mixAlg.scrambleAlg}</h2>
     </div>
 
     <div id="mainstopwatch">
         <div class="mainTime">
-            <span id="mainminute">00</span>
-            <span id="mainsecond">00</span>
+            <span id="mainminute">00:</span>
+            <span id="mainsecond">00.</span>
             <span id="milliseconds">00</span>
         </div>
 
@@ -34,19 +37,31 @@
                         <button id="reset" type="submit" name="reset" value="newScramble">new scramble</button>
                     </form>
                         <button id="start" name="start" value="start">Start</button>
-                        <button id="stop" name="stop" value="stop">Stop </button>
+
+                        <form:form method="post" action="/solve/add" modelAttribute="timeValue">
+                            <form:hidden id="solveTime" path="timeValue"></form:hidden>
+                             <button id="stop" name="stop" value="stop" type="submit">Stop</button>
+                        </form:form>
 
             </div>
     </div>
-    <div id="addTime">
-        <p>Podaj swój czas</p>
-        <form:form method="post" action="/solve/add" modelAttribute="timeValue">
-            <form:hidden id="timeValue" path="timeValue"></form:hidden>
-            <button type="submit">Wyślij</button>
-        </form:form>
+    <div id="statistic">
+        <table>
+            <tr>
+                <td>Best time: </td>
+                <td>${bestSolve}</td>
+            </tr>
+            <tr>
+                <td>Average of all: </td>
+                <td>${averageSolve}</td>
+            </tr>
+                <td>Worst time: </td>
+                <td>${worstSolve}</td>
+        </table>
+        </table>
+
     </div>
 
-    <a href="/solve/add">Dodaj czas</a>
 
 </center>
 
@@ -63,29 +78,37 @@
     });
 
     document.getElementById('stop').addEventListener('click', function (event){
+
+
         clearInterval(int);
         let stringDoZapisuWBazie = document.querySelector('div.mainTime').innerHTML;
-        console.log(stringDoZapisuWBazie);
-        document.getElementById('timeValue').value=stringDoZapisuWBazie;
 
+        console.log(stringDoZapisuWBazie);
+        if(stringDoZapisuWBazie.includes('<span id="milliseconds">00</span>') &&
+            stringDoZapisuWBazie.includes('<span id="mainsecond">00.</span>') &&
+            stringDoZapisuWBazie.includes('<span id="mainminute">00:</span>')){
+            document.getElementById('solveTime').value = "00:00.000";
+        }else{
+            document.getElementById('solveTime').value = stringDoZapisuWBazie;
+        }
 
     });
 
     document.getElementById('reset').addEventListener('click', function (event){
         clearInterval(int);
         [milliseconds,seconds,minutes,hours] = [0,0,0];
-        timerRef.innerHTML = '00 : 00 : 00';
+        timerRef.innerHTML = '00:00.00';
     });
 
     function mainTime(){
         milliseconds+=10;
-        if(milliseconds == 1000){
+        if(milliseconds === 1000){
             milliseconds = 0;
             second++;
-            if(second == 60){
+            if(second === 60){
                 second = 0;
                 minute++;
-                if(minute == 60){
+                if(minute === 60){
                     minute = 0;
                 }
             }
@@ -94,7 +117,7 @@
         let m = minute < 10 ? "0" + minute : minute;
         let s = second < 10 ? "0" + second : second;
         let ms = milliseconds < 10 ? "00" + milliseconds : milliseconds < 100 ? "0" + milliseconds : milliseconds;
-        timerRef.innerHTML = m + ' : ' + s + ' : ' + ms;
+        timerRef.innerHTML = m + ':' + s + '.' + ms;
     }
 </script>
 </body>

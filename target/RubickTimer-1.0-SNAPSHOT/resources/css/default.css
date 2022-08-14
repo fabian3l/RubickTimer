@@ -35,3 +35,8 @@ button {
     left: 50%;
     top: 80%;
 }
+#statistic{
+    position: absolute;
+    top: 80%;
+    left: 15%;
+}

@@ -1,6 +1,5 @@
 package pl.lepsy.solve;
 import lombok.Data;
-import pl.lepsy.scrambleAlg.ScrambleAlg;
 import pl.lepsy.time.Time;
 
 import javax.persistence.*;
@@ -17,20 +16,18 @@ public class Solve {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "solveId_PK")
     private Long solveId;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "scrambleAlg_FK")
-    private ScrambleAlg scrambleAlg;
+    private String scrambleAlg;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "solveTime_FK")
     private Time time;
 
+
     public Solve(){
 
     }
 
-    public Solve(Long solveId, ScrambleAlg scramble, Time time) {
+    public Solve(Long solveId, String scramble, Time time) {
         this.solveId = solveId;
         this.scrambleAlg = scramble;
         this.time = time;
@@ -44,11 +41,11 @@ public class Solve {
         this.solveId = id;
     }
 
-    public ScrambleAlg getScrambleAlg() {
+    public String getScrambleAlg() {
         return scrambleAlg;
     }
 
-    public void setScrambleAlg(ScrambleAlg scrambleAlg) {
+    public void setScrambleAlg(String scrambleAlg) {
         this.scrambleAlg = scrambleAlg;
     }
 

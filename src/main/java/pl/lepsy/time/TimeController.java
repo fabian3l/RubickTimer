@@ -26,6 +26,7 @@ public class TimeController {
     @PostMapping("/add")
     public String addTime(Time time){
         timeService.saveTime(time);
+
         return "redirect:/solve/main";
     }
 }

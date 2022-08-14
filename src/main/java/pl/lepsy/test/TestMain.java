@@ -45,8 +45,6 @@ public class TestMain {
         String timeBetweenMs = String.valueOf(timeOne.until(timeTwo, ChronoUnit.MILLIS));
 
         String result = timeBetweenMin + ":" + timeBetweenSec.substring(0,2) + "." + timeBetweenMs.substring(0,3);
-
-//        String result = "";
         return result;
     }
 
