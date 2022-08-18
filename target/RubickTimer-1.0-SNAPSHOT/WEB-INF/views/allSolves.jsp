@@ -13,12 +13,16 @@
 </head>
 <body>
 <a href="/solve/main">Strona główna</a>
+<a href="/solve/all">All Solves</a>
+<a href="/pll/main">Algorithm's PLL</a>
+
 <table border="1">
   <thead>
     <tr>
       <td>ID</td>
       <td>Scramble alg</td>
       <td>Time of solve</td>
+      <td>Pll Algorithm</td>
       <td>Delete solve</td>
     </tr>
   </thead>
@@ -27,8 +31,10 @@
       <tr>
         <td>${solve.solveId}</td>
         <td>${solve.scrambleAlg}</td>
-        <td>${solve.time.timeValue}</td>
+        <td>${solve.timeValue}</td>
+        <td>${solve.pll.pllAlgorithm}</td>
         <td><a href="/solve/delete/${solve.solveId}">Delete solve</a></td>
+        <td><a href="/solve/addPll/${solve.solveId}">add PLL</a></td>
       </tr>
     </c:forEach>
   </tbody>

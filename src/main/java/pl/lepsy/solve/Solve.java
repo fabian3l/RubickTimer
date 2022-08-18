@@ -1,9 +1,9 @@
 package pl.lepsy.solve;
 import lombok.Data;
-import pl.lepsy.time.Time;
+import pl.lepsy.algorithms.pll.Pll;
 
 import javax.persistence.*;
-import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Table(name = Solve.TABLE_NAME)
@@ -14,31 +14,34 @@ public class Solve {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "solveId_PK")
+    @Column(name = "solve_id")
     private Long solveId;
+    @Column(name = "scramble_alg")
     private String scrambleAlg;
-
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "solveTime_FK")
-    private Time time;
+    @Column(name = "time_value")
+    private String timeValue;
+    @ManyToOne
+    @JoinColumn(name = "pll_id")
+    private Pll pll;
 
 
     public Solve(){
 
     }
 
-    public Solve(Long solveId, String scramble, Time time) {
+    public Solve(Long solveId, String scrambleAlg, String timeValue, Pll pll) {
         this.solveId = solveId;
-        this.scrambleAlg = scramble;
-        this.time = time;
+        this.scrambleAlg = scrambleAlg;
+        this.timeValue = timeValue;
+        this.pll = pll;
     }
 
-    public Long getId() {
+    public Long getSolveId() {
         return solveId;
     }
 
-    public void setId(Long id) {
-        this.solveId = id;
+    public void setSolveId(Long solveId) {
+        this.solveId = solveId;
     }
 
     public String getScrambleAlg() {
@@ -49,11 +52,19 @@ public class Solve {
         this.scrambleAlg = scrambleAlg;
     }
 
-    public Time getTime() {
-        return time;
+    public String getTimeValue() {
+        return timeValue;
     }
 
-    public void setTime(Time time) {
-        this.time = time;
+    public void setTimeValue(String timeValue) {
+        this.timeValue = timeValue;
+    }
+
+    public Pll getPll() {
+        return pll;
+    }
+
+    public void setPll(Pll pll) {
+        this.pll = pll;
     }
 }

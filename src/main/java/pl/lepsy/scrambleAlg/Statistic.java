@@ -1,45 +1,18 @@
 package pl.lepsy.scrambleAlg;
 
 import pl.lepsy.solve.Solve;
-import pl.lepsy.time.Time;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class Statistic {
-    public static void main(String[] args) {
-        Time time1 = new Time();
-        time1.setId(1l);
-        time1.setTimeValue("00:20.000");
 
-        Time time2 = new Time();
-        time2.setId(2l);
-        time2.setTimeValue("01:10.000");
-
-        Solve solve1 = new Solve();
-        solve1.setSolveId(1l);
-        solve1.setScrambleAlg("XYZ");
-        solve1.setTime(time1);
-
-        Solve solve2 = new Solve();
-        solve2.setId(2l);
-        solve2.setScrambleAlg("XTZTZT");
-        solve2.setTime(time2);
-
-        List<Solve> solveList = new ArrayList<>();
-        solveList.add(solve1);
-        solveList.add(solve2);
-
-        System.out.println(worstTimeOfSolve(solveList));
-    }
     public static String worstTimeOfSolve(List<Solve> solveList){
         if (solveList.size() > 0){
             List<Integer> listOfSolvesInt= new ArrayList<>();
 
             for (Solve solve : solveList) {
-                String itemWithoutSigns = solve.getTime().getTimeValue().replace(":", "").replace(".", "");
+                String itemWithoutSigns = solve.getTimeValue().replace(":", "").replace(".", "");
                 int number = Integer.parseInt(itemWithoutSigns);
                 listOfSolvesInt.add(number);
             }
@@ -75,7 +48,7 @@ public class Statistic {
             List<Integer> listOfSolvesInt= new ArrayList<>();
             int sumOfAll = 0;
             for (Solve solve : solveList) {
-                String itemWithoutSigns = solve.getTime().getTimeValue().replace(":", "").replace(".", "");
+                String itemWithoutSigns = solve.getTimeValue().replace(":", "").replace(".", "");
                 int number = Integer.parseInt(itemWithoutSigns);
                 sumOfAll += number;
                 listOfSolvesInt.add(number);
@@ -104,7 +77,7 @@ public class Statistic {
             String converted7Numbers = bestTime7Numbers.substring(0, 2) + ":" + bestTime7Numbers.substring(2, 4) + "." + bestTime7Numbers.substring(4,7);
 
             return converted7Numbers;
-            
+
         }
         return "";
     }
@@ -114,7 +87,7 @@ public class Statistic {
             List<Integer> listOfSolvesInt= new ArrayList<>();
 
             for (Solve solve : solveList) {
-                String itemWithoutSigns = solve.getTime().getTimeValue().replace(":", "").replace(".", "");
+                String itemWithoutSigns = solve.getTimeValue().replace(":", "").replace(".", "");
                 int number = Integer.parseInt(itemWithoutSigns);
                 listOfSolvesInt.add(number);
             }

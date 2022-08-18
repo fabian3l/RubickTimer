@@ -22,7 +22,7 @@ button {
 }
 #mainTime{
     position: absolute;
-    top: 40%;
+    top: 10%;
     left: 50%;
 }
 #scramble{
@@ -39,4 +39,9 @@ button {
     position: absolute;
     top: 80%;
     left: 15%;
+}
+#pllAlgorithms{
+    position: absolute;
+    top: 30%;
+    left: 75%;
 }

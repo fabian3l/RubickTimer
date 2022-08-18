@@ -4,7 +4,6 @@ import org.springframework.stereotype.Controller;
 import pl.lepsy.solve.Solve;
 import pl.lepsy.solve.SolveController;
 import pl.lepsy.solve.SolveService;
-import pl.lepsy.time.Time;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,36 +18,10 @@ public class StatisticTest {
     public static void main(String[] args) {
 
 
-        Time time1 = new Time();
-        time1.setId(1l);
-        time1.setTimeValue("02:16.001");
-
-        Time time2 = new Time();
-        time2.setId(2l);
-        time2.setTimeValue("01:00.112");
-
-        Solve solve1 = new Solve();
-        solve1.setSolveId(1l);
-        solve1.setScrambleAlg("XYZ");
-        solve1.setTime(time1);
-
-        Solve solve2 = new Solve();
-        solve2.setId(2l);
-        solve2.setScrambleAlg("XTZTZT");
-        solve2.setTime(time2);
-
-         List<Solve> solveList = new ArrayList<>();
-         solveList.add(solve1);
-         solveList.add(solve2);
-
-        System.out.println(solveList);
-
         List<Integer> listOfSolvesInt= new ArrayList<>();
 
-        for (int i = 0; i < solveList.size(); i++){
-            String itemWithoutSigns = solveList.get(i).getTime().getTimeValue().replace(":","").replace(".","");
-            int number = Integer.parseInt(itemWithoutSigns);
-            listOfSolvesInt.add(number);
+        for (int i = 0; i < listOfSolvesInt.size(); i++){
+
         }
         Collections.sort(listOfSolvesInt);
         String bestTime = String.valueOf(listOfSolvesInt.get(0));

@@ -1,6 +1,8 @@
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--@elvariable id="timeValue" type="java"--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--@elvariable id="solveValue" type=""--%>
+
 <%--
   Created by IntelliJ IDEA.
   User: fabian
@@ -16,12 +18,14 @@
 </head>
 <body>
 <h1>Main Site</h1>
+<a href="/solve/main">Strona główna</a>
 <a href="/solve/all">All Solves</a>
+<a href="/pll/main">Algorithm's PLL</a>
 
 <center>
 
     <div id="scramble">
-        <h2>${mixAlg.scrambleAlg}</h2>
+        <h2>${mixAlg}</h2>
     </div>
 
     <div id="mainstopwatch">
@@ -38,8 +42,9 @@
                     </form>
                         <button id="start" name="start" value="start">Start</button>
 
-                        <form:form method="post" action="/solve/add" modelAttribute="timeValue">
+                        <form:form method="post" action="/solve/add" modelAttribute="solveValue">
                             <form:hidden id="solveTime" path="timeValue"></form:hidden>
+                            <form:hidden id="solveScramble" path="scrambleAlg"></form:hidden>
                              <button id="stop" name="stop" value="stop" type="submit">Stop</button>
                         </form:form>
 
@@ -55,42 +60,56 @@
                 <td>Average of all: </td>
                 <td>${averageSolve}</td>
             </tr>
+            <tr>
                 <td>Worst time: </td>
                 <td>${worstSolve}</td>
+            </tr>
         </table>
-        </table>
-
     </div>
-
-
 </center>
+
+<div id="pllAlgorithms">
+<%--    <form:form modelAttribute="solveValue" action="/solve/addPll" method="post">--%>
+<%--        <form:select path="pll">--%>
+<%--            <form:option value="0" label="---wybierz---"/>--%>
+<%--            <form:options items="${pllAll}" itemLabel="pllName" />&lt;%&ndash;itemValue="pllId"/>&ndash;%&gt;--%>
+<%--        </form:select>--%>
+<%--        <input type="submit" value="Add PLL to solve">--%>
+<%--    </form:form>--%>
+</div>
 
 <script>
     let [milliseconds,second,minute,] = [0,0,0];
     let timerRef = document.querySelector('.mainTime');
     let int = null;
 
+
+
+
     document.getElementById('start').addEventListener('click', function(event){
+
         if(int!==null){
             clearInterval(int);
         }
-        int = setInterval(mainTime, 10);
+
+        int = setInterval(mainTime, 8);
     });
 
     document.getElementById('stop').addEventListener('click', function (event){
 
-
         clearInterval(int);
-        let stringDoZapisuWBazie = document.querySelector('div.mainTime').innerHTML;
+        let timeToSaveInDb = document.querySelector('div.mainTime').innerHTML;
+        let scrambleToSaveInDb = document.getElementById('scramble').innerText;
 
-        console.log(stringDoZapisuWBazie);
-        if(stringDoZapisuWBazie.includes('<span id="milliseconds">00</span>') &&
-            stringDoZapisuWBazie.includes('<span id="mainsecond">00.</span>') &&
-            stringDoZapisuWBazie.includes('<span id="mainminute">00:</span>')){
+        if(timeToSaveInDb.includes('<span id="milliseconds">00</span>') &&
+            timeToSaveInDb.includes('<span id="mainsecond">00.</span>') &&
+            timeToSaveInDb.includes('<span id="mainminute">00:</span>')){
             document.getElementById('solveTime').value = "00:00.000";
         }else{
-            document.getElementById('solveTime').value = stringDoZapisuWBazie;
+            document.getElementById('solveTime').value = timeToSaveInDb;
         }
+
+        document.getElementById('solveScramble').value = scrambleToSaveInDb;
 
     });
 
